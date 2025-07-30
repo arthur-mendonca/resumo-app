@@ -1,5 +1,6 @@
 import {
   isRouteErrorResponse,
+  Link,
   Links,
   Meta,
   Outlet,
@@ -46,30 +47,23 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
-  let stack: string | undefined;
-
-  if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
-    details =
-      error.status === 404
-        ? "The requested page could not be found."
-        : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
-  }
-
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <div className="bg-slate-900 min-h-screen flex flex-col items-center justify-center font-sans p-4 text-white">
+      <div className="w-full max-w-2xl text-center">
+        <h1 className="text-3xl font-bold text-red-500">Ocorreu um erro</h1>
+        <p className="text-slate-400 mt-2">
+          {isRouteErrorResponse(error) && error.status === 404
+            ? "Não foi possível encontrar o resumo solicitado."
+            : "Algo deu errado. Tente novamente."}
+        </p>
+        <div className="text-center mt-8">
+          <Link
+            to="/"
+            className="bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold py-2 px-4 rounded-md transition-all">
+            Voltar para a página inicial
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
