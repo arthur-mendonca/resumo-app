@@ -92,14 +92,33 @@ export default function Index() {
           <form
             onSubmit={handleSummarize}
             className="flex flex-col sm:flex-row gap-3 mb-6">
-            <input
-              type="url"
-              name="url"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://portal-de-noticia.com/..."
-              className="flex-grow bg-slate-800 border border-slate-700 rounded-md px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
-            />
+            <div className="flex-grow relative">
+              <input
+                type="url"
+                name="url"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="https://portal-de-noticia.com/..."
+                className="w-full flex-grow bg-slate-800 border border-slate-700 rounded-md px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
+              />
+              {url.length > 0 && (
+                <span onClick={() => setUrl("")}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    className="absolute size-8 right-3 top-2.5 bg-slate-400 hover:bg-slate-700 hover:cursor-pointer rounded-full p-1">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 18 18 6M6 6l12 12"
+                    />
+                  </svg>
+                </span>
+              )}
+            </div>
             <button
               type="submit"
               disabled={isLoading}
