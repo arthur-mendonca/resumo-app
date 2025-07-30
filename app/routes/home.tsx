@@ -1,4 +1,3 @@
-import App from "~/root";
 import type { Route } from "./+types/home";
 import Index from "~/index";
 
