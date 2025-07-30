@@ -12,6 +12,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import type { error } from "console";
 import { ToastProvider } from "./context/ToastContext";
+import { Footer } from "./components/ui/Footer";
 
 // export const links: Route.LinksFunction = () => [
 // { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -48,7 +49,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <ToastProvider>
-      <Outlet />
+      <div className="min-h-screen flex flex-col bg-slate-900">
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
     </ToastProvider>
   );
 }

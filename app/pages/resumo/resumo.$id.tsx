@@ -1,5 +1,5 @@
 import { useLoaderData, Link } from "react-router";
-import type { LoaderFunctionArgs } from "react-router";
+import type { LoaderFunctionArgs, MetaFunction } from "react-router";
 import ReactMarkdown from "react-markdown";
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -22,7 +22,44 @@ export async function loader({ params }: LoaderFunctionArgs) {
   return data;
 }
 
-export default function SummaryRoute() {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  if (!data) {
+    return [
+      { title: "Resumo não encontrado" },
+      {
+        name: "description",
+        content: "Não foi possível carregar este resumo.",
+      },
+    ];
+  }
+
+  const summaryTitle =
+    data.summary.split("\n")[0].replace(/\*/g, "") || "Resumo da Notícia";
+  const summaryDescription = data.summary.substring(0, 155) + "...";
+
+  return [
+    { title: `${summaryTitle} | Resumido.app` },
+    { name: "description", content: summaryDescription },
+
+    // Tags do Open Graph para a prévia do link
+    { property: "og:title", content: summaryTitle },
+    { property: "og:description", content: summaryDescription },
+    { property: "og:type", content: "article" },
+    { property: "og:url", content: `https://resumido.app/resumo/${data.id}` },
+    // Adicione uma imagem padrão para todos os resumos
+    { property: "og:image", content: "/memo.png" },
+
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: summaryTitle },
+    { name: "twitter:description", content: summaryDescription },
+    {
+      name: "twitter:image",
+      content: "/memo.png",
+    },
+  ];
+};
+
+export default function SummaryPage() {
   const summaryData = useLoaderData<typeof loader>();
 
   return (
