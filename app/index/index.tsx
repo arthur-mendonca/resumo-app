@@ -99,7 +99,7 @@ export default function Index() {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="https://portal-de-noticia.com/..."
-                className="w-full flex-grow bg-slate-800 border border-slate-700 rounded-md px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
+                className="w-full pr-12 flex-grow bg-slate-800 border border-slate-700 rounded-md px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
               />
               {url.length > 0 && (
                 <span onClick={() => setUrl("")}>
