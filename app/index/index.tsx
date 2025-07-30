@@ -1,7 +1,9 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { useToast } from "~/context/ToastContext";
 
 export default function Index() {
+  const { showToast } = useToast();
   // --- Estados do Componente ---
   const [url, setUrl] = useState("");
   const [summary, setSummary] = useState("");
@@ -11,7 +13,6 @@ export default function Index() {
   const [error, setError] = useState<string | null>(null);
 
   const processNewsUrl = async (articleUrl: string) => {
-    // ATENÇÃO: Verifique se esta é a URL correta da sua função 'processAndSaveNews'
     const backendUrl = `https://api-resumo-815414977002.us-central1.run.app`;
 
     try {
@@ -64,6 +65,14 @@ export default function Index() {
       }
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleCopyLink = () => {
+    if (summaryId) {
+      const link = `${window.location.origin}/resumo/${summaryId}`;
+      navigator.clipboard.writeText(link);
+      showToast("success", "Link copiado!");
     }
   };
 
@@ -165,10 +174,7 @@ export default function Index() {
                     <button
                       type="button"
                       className="bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold px-4 py-2 rounded-md mt-2 transition-all"
-                      onClick={() => {
-                        const link = `${window.location.origin}/resumo/${summaryId}`;
-                        navigator.clipboard.writeText(link);
-                      }}
+                      onClick={() => handleCopyLink()}
                       title="Copiar link">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
