@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { Footer } from "~/components/ui/Footer";
 import { useToast } from "~/context/ToastContext";
 
 export default function Index() {
@@ -77,8 +78,8 @@ export default function Index() {
   };
 
   return (
-    <div className="bg-slate-900 min-h-screen flex flex-col items-center font-sans p-4 text-white">
-      <div className="w-full max-w-2xl py-12">
+    <div className="bg-slate-900 min-h-screen flex flex-col items-center font-sans  text-white">
+      <div className="w-full max-w-2xl py-12 p-4">
         <header className="text-center mb-8">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold text-cyan-400">
@@ -221,6 +222,10 @@ export default function Index() {
             </div>
           )}
         </main>
+      </div>
+
+      <div className="mt-auto w-full">
+        <Footer />
       </div>
     </div>
   );
