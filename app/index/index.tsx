@@ -21,15 +21,15 @@ export default function Index() {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({
-          error: "Falha ao ler a resposta de erro do back-end.",
+          error: "Falha ao ler a resposta de erro.",
         }));
         throw new Error(
-          `Erro no back-end: ${response.status} - ${errorData.error || response.statusText}`
+          `Erro: ${response.status} - ${errorData.error || response.statusText}`
         );
       }
       return await response.json();
     } catch (err) {
-      console.error("Erro na comunicação com o back-end:", err);
+      console.error("Erro na comunicação com o servidor:", err);
       throw err;
     }
   };
@@ -54,7 +54,7 @@ export default function Index() {
         setSummaryId(result.id);
         setOriginalUrl(url); // Guarda a URL original para exibir
       } else {
-        throw new Error("A resposta do back-end estava incompleta.");
+        throw new Error("A resposta do servidor estava incompleta.");
       }
     } catch (err) {
       if (err instanceof Error) {
