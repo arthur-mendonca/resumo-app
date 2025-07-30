@@ -4,8 +4,8 @@ import Index from "~/index";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Resumir notícias" },
+    { name: "description", content: "Bem-vindo ao Resumir Notícias!" },
   ];
 }
 
