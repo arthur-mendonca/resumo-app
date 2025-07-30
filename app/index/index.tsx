@@ -80,9 +80,15 @@ export default function Index() {
     <div className="bg-slate-900 min-h-screen flex flex-col items-center font-sans p-4 text-white">
       <div className="w-full max-w-2xl py-12">
         <header className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-cyan-400">
-            Resumidor de Notícias
-          </h1>
+          <div>
+            <h1 className="text-4xl md:text-5xl font-bold text-cyan-400">
+              Resumido
+            </h1>
+            <h2 className="text-slate-400 md:text-xl font-medium mt-2">
+              Seu app de resumo de notícias.
+            </h2>
+          </div>
+
           <p className="text-slate-400 mt-2">
             Cole o link de uma notícia e obtenha um resumo instantâneo.
           </p>
