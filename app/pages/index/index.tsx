@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { Footer } from "~/components/ui/Footer";
+import { Link } from "react-router";
 import { useToast } from "~/context/ToastContext";
 
 export default function Index() {
@@ -92,6 +92,14 @@ export default function Index() {
         <p className="text-slate-400 mt-2">
           Cole o link de uma notícia e obtenha um resumo instantâneo.
         </p>
+
+        <div className="mt-6">
+          <Link
+            to="/explorar"
+            className="bg-slate-700 hover:bg-slate-600 text-cyan-400 font-bold py-2 px-4 rounded-md transition-all">
+            Explorar resumos salvos →
+          </Link>
+        </div>
       </header>
 
       <section className="h-full w-full max-w-2xl">

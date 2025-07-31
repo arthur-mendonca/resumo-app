@@ -4,7 +4,7 @@ import Index from "~/pages/index/index";
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "Resumir notícias" },
-    { name: "description", content: "Bem-vindo ao Resumir Notícias!" },
+    { name: "description", content: "Resuma e compartilhe notícias!" },
   ];
 }
 
