@@ -1,8 +1,9 @@
 import { useLoaderData, Link, useSearchParams } from "react-router";
 import type { LoaderFunctionArgs } from "react-router";
+import type { Summary } from "~/types/summaries";
 
 // Lista de categorias para criar os botões de filtro.
-// Pode ser a mesma lista que você tem no seu back-end.
+
 const categories = [
   { nome: "Política", subcategorias: ["Nacional", "Internacional"] },
   {
@@ -103,7 +104,20 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function ExplorePage() {
   const { summaries, currentCategory } = useLoaderData<typeof loader>();
-  const [searchParams] = useSearchParams();
+  // const [searchParams] = useSearchParams();
+
+  const getDate = (createdAt: any) => {
+    if (createdAt && typeof createdAt === "object" && "_seconds" in createdAt) {
+      return new Date(
+        createdAt._seconds * 1000 + Math.floor(createdAt._nanoseconds / 1e6)
+      );
+    }
+    return new Date(createdAt);
+  };
+
+  const orderedSummaries = summaries.sort((a: Summary, b: Summary) => {
+    return getDate(b.createdAt).getTime() - getDate(a.createdAt).getTime();
+  });
 
   return (
     <div className="min-h-screen font-sans p-4 text-white">
@@ -149,16 +163,17 @@ export default function ExplorePage() {
 
         {/* Lista de Resumos */}
         <main>
-          {summaries.length > 0 ? (
+          {orderedSummaries.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {summaries.map((summary: any) => (
+              {orderedSummaries.map((summary: Summary) => (
                 <Link
                   to={`/resumo/${summary.id}`}
                   key={summary.id}
-                  className="block bg-slate-800/50 border border-slate-700 rounded-lg p-5 hover:border-cyan-500 transition-colors">
-                  <span className="inline-block bg-slate-700 text-cyan-400 text-xs font-semibold px-2 py-1 rounded-full mb-3">
+                  className="flex flex-col gap-2 bg-slate-800/50 border border-slate-700 rounded-lg p-5 hover:border-cyan-500 transition-colors">
+                  <span className="w-min inline-block bg-slate-700 text-cyan-400 text-xs font-semibold px-2 py-1 rounded-full mb-3">
                     {summary.category}
                   </span>
+
                   <h2 className="text-lg font-bold text-slate-200 mb-2 line-clamp-3">
                     {summary.summary.split("\n")[0].replace(/\*/g, "")}
                   </h2>
@@ -167,6 +182,13 @@ export default function ExplorePage() {
                       .substring(summary.summary.indexOf("\n"))
                       .replace(/\*/g, "")}
                   </p>
+
+                  <div className="mt-auto inline-flex items-center text-slate-500 text-xs mt-3">
+                    {(() => {
+                      const date = getDate(summary.createdAt);
+                      return date.toLocaleDateString();
+                    })()}
+                  </div>
                 </Link>
               ))}
             </div>

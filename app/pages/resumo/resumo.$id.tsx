@@ -1,6 +1,7 @@
 import { useLoaderData, Link } from "react-router";
 import type { LoaderFunctionArgs, MetaFunction } from "react-router";
 import ReactMarkdown from "react-markdown";
+import type { Summary } from "~/types/summaries";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { id } = params;
@@ -60,19 +61,37 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export default function SummaryPage() {
-  const summaryData = useLoaderData<typeof loader>();
+  const summaryData: Summary = useLoaderData<typeof loader>();
+
+  const getDate = (createdAt: any) => {
+    if (createdAt && typeof createdAt === "object" && "_seconds" in createdAt) {
+      return new Date(
+        createdAt._seconds * 1000 + Math.floor(createdAt._nanoseconds / 1e6)
+      );
+    }
+    return new Date(createdAt);
+  };
 
   return (
     <div className="bg-slate-900 min-h-screen flex flex-col items-center justify-center font-sans p-4 text-white">
       <div className="w-full max-w-2xl">
         {summaryData ? (
-          <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-6">
+          <div className="flex flex-col gap-2 bg-slate-800/50 border border-slate-700 rounded-lg p-6">
             <h1 className="text-3xl font-bold text-cyan-400 mb-4">
               Resumo da Notícia
             </h1>
+
+            <div className="text-slate-500 text-sm ">
+              {(() => {
+                const date = getDate(summaryData.createdAt);
+                return date.toLocaleDateString();
+              })()}
+            </div>
+
             <div className="prose prose-invert text-slate-300 mb-6">
               <ReactMarkdown>{summaryData.summary}</ReactMarkdown>
             </div>
+
             <div className="border-t pt-4 border-slate-700">
               <p className="font-semibold text-slate-400">Link Original:</p>
               <a
@@ -83,6 +102,7 @@ export default function SummaryPage() {
                 {summaryData.originalUrl}
               </a>
             </div>
+
             <div className="text-center mt-8">
               <Link
                 to="/"
