@@ -2,6 +2,7 @@ import { useLoaderData, Link } from "react-router";
 import type { LoaderFunctionArgs, MetaFunction } from "react-router";
 import ReactMarkdown from "react-markdown";
 import type { Summary } from "~/types/summaries";
+import { parseDate } from "~/utils/parseDate";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { id } = params;
@@ -63,15 +64,6 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 export default function SummaryPage() {
   const summaryData: Summary = useLoaderData<typeof loader>();
 
-  const getDate = (createdAt: any) => {
-    if (createdAt && typeof createdAt === "object" && "_seconds" in createdAt) {
-      return new Date(
-        createdAt._seconds * 1000 + Math.floor(createdAt._nanoseconds / 1e6)
-      );
-    }
-    return new Date(createdAt);
-  };
-
   return (
     <div className="bg-slate-900 min-h-screen flex flex-col items-center justify-center font-sans p-4 text-white">
       <div className="w-full max-w-2xl">
@@ -83,7 +75,7 @@ export default function SummaryPage() {
 
             <div className="text-slate-500 text-sm ">
               {(() => {
-                const date = getDate(summaryData.createdAt);
+                const date = parseDate(summaryData.createdAt);
                 return date.toLocaleDateString();
               })()}
             </div>

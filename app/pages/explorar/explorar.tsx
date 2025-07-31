@@ -1,6 +1,7 @@
 import { useLoaderData, Link, useSearchParams } from "react-router";
 import type { LoaderFunctionArgs } from "react-router";
 import type { Summary } from "~/types/summaries";
+import { parseDate } from "~/utils/parseDate";
 
 // Lista de categorias para criar os botões de filtro.
 
@@ -106,17 +107,8 @@ export default function ExplorePage() {
   const { summaries, currentCategory } = useLoaderData<typeof loader>();
   // const [searchParams] = useSearchParams();
 
-  const getDate = (createdAt: any) => {
-    if (createdAt && typeof createdAt === "object" && "_seconds" in createdAt) {
-      return new Date(
-        createdAt._seconds * 1000 + Math.floor(createdAt._nanoseconds / 1e6)
-      );
-    }
-    return new Date(createdAt);
-  };
-
   const orderedSummaries = summaries.sort((a: Summary, b: Summary) => {
-    return getDate(b.createdAt).getTime() - getDate(a.createdAt).getTime();
+    return parseDate(b.createdAt).getTime() - parseDate(a.createdAt).getTime();
   });
 
   return (
@@ -185,7 +177,7 @@ export default function ExplorePage() {
 
                   <div className="mt-auto inline-flex items-center text-slate-500 text-xs mt-3">
                     {(() => {
-                      const date = getDate(summary.createdAt);
+                      const date = parseDate(summary.createdAt);
                       return date.toLocaleDateString();
                     })()}
                   </div>
