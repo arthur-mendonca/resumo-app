@@ -13,7 +13,7 @@ import "./app.css";
 import type { error } from "console";
 import { ToastProvider } from "./context/ToastContext";
 import { Footer } from "./components/ui/Footer";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react"
 
 // export const links: Route.LinksFunction = () => [
 // { rel: "preconnect", href: "https://fonts.googleapis.com" },
