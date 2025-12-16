@@ -13,6 +13,7 @@ import "./app.css";
 import type { error } from "console";
 import { ToastProvider } from "./context/ToastContext";
 import { Footer } from "./components/ui/Footer";
+import { Analytics } from "@vercel/analytics/next"
 
 // export const links: Route.LinksFunction = () => [
 // { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -39,6 +40,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
+        <Analytics />
         <ScrollRestoration />
         <Scripts />
       </body>
