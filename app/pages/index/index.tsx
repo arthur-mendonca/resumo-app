@@ -14,7 +14,7 @@ export default function Index() {
   const [error, setError] = useState<string | null>(null);
 
   const processNewsUrl = async (articleUrl: string) => {
-    const backendUrl = `https://api-resumo-815414977002.us-central1.run.app`;
+    const backendUrl = ``;
 
     try {
       const response = await fetch(
