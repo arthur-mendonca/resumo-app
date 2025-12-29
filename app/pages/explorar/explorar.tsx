@@ -83,7 +83,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const category = url.searchParams.get("category");
 
   // ATENÇÃO: Verifique se esta é a URL correta da sua função 'getSummaries'
-  let backendUrl = `https://get-summaries-815414977002.us-central1.run.app`;
+  let backendUrl = ``;
 
   if (category) {
     // Se houver um filtro de categoria, adiciona à URL da API
