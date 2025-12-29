@@ -10,7 +10,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
     throw new Response("ID não encontrado", { status: 404 });
   }
 
-  const backendUrl = `https://get-summary-815414977002.us-central1.run.app`;
+  const backendUrl = ``;
   const response = await fetch(`${backendUrl}?id=${id}`);
 
   if (!response.ok) {
